@@ -1,0 +1,10 @@
+[package]
+org = "mohan"
+name = "cerner_integration"
+version = "0.1.0"
+
+[[dependency]]
+org = "wso2"
+name = "health.x12.v005010"
+version = "0.1.0"
+repository = "local"
