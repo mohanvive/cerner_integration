@@ -1,0 +1,4 @@
+[container.image]
+repository="mohanvive" # Docker hub name
+name="cerner-integration" # container name
+
