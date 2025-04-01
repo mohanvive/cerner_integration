@@ -42,8 +42,7 @@ jobs:
           echo "$AZURE_CREDENTIALS" > config
           export KUBECONFIG=./config
           kubectl get ns
-          kubectl apply -f ./target/kubernetes/cerner_integration -n dev
-
-          
-
+          curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+          kustomize build kustomize/dev > kustomize/dev/final.yaml
+          kubectl apply -f ./kustomize/dev/final.yaml -n dev
           
