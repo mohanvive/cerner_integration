@@ -40,7 +40,7 @@ jobs:
       - name: Deploy to Cluster
         run: | # Replace my-ballerina-app with your Docker image name
           echo "$AZURE_CREDENTIALS" > config
-          cp config ~/.kube/config
+          export KUBECONFIG = ./config
           kubectl get ns
 
           
