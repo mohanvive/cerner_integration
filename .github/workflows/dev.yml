@@ -46,6 +46,6 @@ jobs:
           echo "$AZURE_CREDENTIALS" > config
           export KUBECONFIG=./config
           kubectl get ns
-          kustomize build kustomize/dev > kustomize/dev/final.yaml
-          kubectl apply -f ./kustomize/dev/final.yaml -n dev
+          kustomize build deployment/dev > deployment/dev/final.yaml
+          kubectl apply -f ./deployment/dev/final.yaml -n dev
           
