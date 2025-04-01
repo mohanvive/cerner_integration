@@ -33,5 +33,5 @@ jobs:
           pushd deployment/prod
           kustomize edit set image mohanvive/cerner-integration:latest=mohanvive/cerner-integration:${{ github.event.release.tag_name }}
           popd
-          kustomize build deployment/prod > 
+          kustomize build deployment/prod > deployment/prod/final.yaml 
           kubectl apply -f deployment/prod/final.yaml -n prod
