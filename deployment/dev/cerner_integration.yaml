@@ -20,6 +20,26 @@ spec:
   type: "ClusterIP"
 ---
 apiVersion: "v1"
+kind: "Service"
+metadata:
+  labels:
+    app: "cerner_integration"
+  name: "cerner-integrate-lb"
+spec:
+  ports:
+  - name: "port-1-cerner-i"
+    port: 9090
+    protocol: "TCP"
+    targetPort: 9090
+  - name: "port-2-cerner-i"
+    port: 9091
+    protocol: "TCP"
+    targetPort: 9091
+  selector:
+    app: "cerner_integration"
+  type: "LoadBalancer"
+---
+apiVersion: "v1"
 kind: "ConfigMap"
 metadata:
   name: "config-config-map"
