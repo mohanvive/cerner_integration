@@ -30,5 +30,7 @@ jobs:
           echo "$AZURE_CREDENTIALS" > config
           export KUBECONFIG=./config
           kubectl get ns
+          pushd deployment/prod
           kustomize edit set image mohanvive/cerner-integration:latest=mohanvive/cerner-integration:${{ github.event.release.tag_name }}
+          popd
           kubectl apply -f ./deployment/prod -n prod
