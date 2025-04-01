@@ -42,7 +42,7 @@ jobs:
           echo "$AZURE_CREDENTIALS" > config
           export KUBECONFIG=./config
           kubectl get ns
-          kubectl apply -f ./target/kubernetes/cerner_integration -ns dev
+          kubectl apply -f ./target/kubernetes/cerner_integration -n dev
 
           
 
