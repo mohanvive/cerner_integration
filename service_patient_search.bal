@@ -41,7 +41,7 @@ service /healthcare on new http:Listener(9090) {
             searchParameters = searchParameters
         );
 
-        // Create response
+        // Create response - updated
         PatientSearchResponse response = {
             httpStatusCode: searchResponse.httpStatusCode,
             patientData: <json> searchResponse.'resource
