@@ -6,4 +6,4 @@
 /target
 /types.bal
 
-.DS_Store
+*.DS_Store

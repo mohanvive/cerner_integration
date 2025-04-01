@@ -31,4 +31,4 @@ jobs:
           export KUBECONFIG=./config
           kubectl get ns
           kubectl set image -k deployment/dev cerner-integrat-deployment=mohanvive/cerner-integration:${{ github.event.release.tag_name }}
-          kubectl apply -f ./deployment/prod
+          kubectl apply -f ./deployment/prod -n prod
