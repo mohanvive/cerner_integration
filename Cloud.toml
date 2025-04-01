@@ -2,3 +2,5 @@
 repository="mohanvive" # Docker hub name
 name="cerner-integration" # container name
 
+[[cloud.config.files]]
+file="Config.toml"
