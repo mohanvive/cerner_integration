@@ -14,34 +14,21 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Set up Ballerina
-        uses: ballerina-platform/setup-ballerina@v1
-        with:
-          version: 2201.12.2 # Specify the Ballerina version
-
-      - name: Cache Ballerina Dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.ballerina
-          key: ballerina-deps-${{ hashFiles('**/Ballerina.toml') }}
-          restore-keys: |
-            ballerina-deps-
-
-      - name: Run Tests
-        run: bal test
-
-      # Optional: Docker Build and Push
-      - name: Build Docker Image
-        run: bal build --cloud=k8s
-
-      - name: Push Docker Image
-        run: | # Replace my-ballerina-app with your Docker image name
+      - name: Tag and Push Docker Image
+        run: | 
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-          docker push mohanvive/cerner-integration:latest
-
+          docker pull mohanvive/cerner-integration:latest
+          docker tag mohanvive/cerner-integration:latest mohanvive/cerner-integration:${{ github.event.release.tag_name }}
+          docker push mohanvive/cerner-integration:${{ github.event.release.tag_name }}
+      
+      - name: Install Kustomize
+        run: |
+          curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+      
       - name: Deploy to Cluster
-        run: | # Replace my-ballerina-app with your Docker image name
+        run: | 
           echo "$AZURE_CREDENTIALS" > config
           export KUBECONFIG=./config
           kubectl get ns
-          kubectl apply -f ./target/kubernetes/cerner_integration -n prod
+          kubectl set image -k deployment/dev cerner-integrat-deployment=mohanvive/cerner-integration:${{ github.event.release.tag_name }}
+          kubectl apply -f ./deployment/prod
