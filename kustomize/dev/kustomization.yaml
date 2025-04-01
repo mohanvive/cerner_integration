@@ -1,0 +1,9 @@
+resources:
+  - cerner_integration.yaml
+patches:
+- path: deployment-patch.yaml
+  target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: cerner-integrat-deployment
