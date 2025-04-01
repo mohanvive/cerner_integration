@@ -1,0 +1,15 @@
+resources:
+- cerner_integration.yaml
+patches:
+- path: deployment-patch.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: cerner-integrat-deployment
+    version: v1
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: mohanvive/cerner-integration:latest
+  newName: mohanvive/cerner-integration
+  newTag: v2.2.0
