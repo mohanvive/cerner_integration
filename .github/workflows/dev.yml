@@ -48,4 +48,5 @@ jobs:
           kubectl get ns
           kustomize build deployment/dev > deployment/dev/final.yaml
           kubectl apply -f ./deployment/dev/final.yaml -n dev
+          kubectl rollout restart deployment cerner-integrat-deployment
           
