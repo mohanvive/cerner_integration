@@ -141,13 +141,6 @@ service /healthcare on new http:Listener(9090) {
 
     resource function post coverage/eligibility(PatientInput patientInput) returns json|CustomCoverage|error {
 
-        // Search for patients with the given name, last name and 
-        // map<string[]> patientSearchParameters = {
-        //     "given": [patientInput.firtName],
-        //     "name": [patientInput.lastName],
-        //     "birthdate": [patientInput.birthDate]
-        // };
-
         // Search for patients with the given id 
         map<string[]> patientSearchParameters = {
             "_id": [patientInput.memberId]
@@ -195,14 +188,14 @@ isolated function mapInternationPatientToCustomPatient(international401:Patient 
 
 isolated function mapInternationCoverageToCustomCoverage(international401:Patient patient,
         international401:Coverage coverage) returns CustomCoverage => {
-    benefit_code: "",
+    benefit_code: getCode(coverage),
     coverage_end_date: getEndDate(coverage),
     coverage_start_date: getStartDate(coverage),
     email: getFirstContact(patient, "email"),
     gender: patient.gender.toString(),
     carrier_id: getCarrierId(coverage),
     account_id: coverage.subscriberId ?: "",
-    group_number: "",
+    group_number: getGroupValue(coverage),
     is_eligible: false,
     member_age: 0,
     member_city: getCity(patient),
@@ -322,6 +315,28 @@ isolated function getCarrierId(international401:Coverage coverage) returns strin
     r4:Identifier[]? var1 = coverage.identifier;
     if (var1 is r4:Identifier[]) {
         return var1[0].id ?: "";
+    }
+
+    return "";
+}
+
+isolated function getCode(international401:Coverage coverage) returns string {
+    international401:CoverageClass[]? classResult = coverage.'class;
+    if classResult is international401:CoverageClass[] {
+        r4:CodeableConcept codeableConcept = classResult[0].'type;
+        r4:Coding[]? coding = codeableConcept.coding;
+        if coding is r4:Coding[] {
+            return coding[0].code ?: "";
+        }
+    }
+
+    return "";
+}
+
+isolated function getGroupValue(international401:Coverage coverage) returns string {
+    international401:CoverageClass[]? classResult = coverage.'class;
+    if classResult is international401:CoverageClass[] {
+        return classResult[0].value;
     }
 
     return "";
