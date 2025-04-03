@@ -189,8 +189,8 @@ isolated function mapInternationPatientToCustomPatient(international401:Patient 
 isolated function mapInternationCoverageToCustomCoverage(international401:Patient patient,
         international401:Coverage coverage) returns CustomCoverage => {
     benefit_code: getCode(coverage),
-    coverage_end_date: getEndDate(coverage),
-    coverage_start_date: getStartDate(coverage),
+    coverage_end_date: coverage.period?.end ?: "",
+    coverage_start_date: coverage.period?.'start ?: "",
     email: getFirstContact(patient, "email"),
     gender: patient.gender.toString(),
     carrier_id: getCarrierId(coverage),
@@ -249,7 +249,6 @@ isolated function getRelationshipCode(international401:Coverage coverage) return
     r4:CodeableConcept? relationship = coverage.relationship;
     if relationship is r4:CodeableConcept {
         r4:Coding[]? coding = relationship.coding;
-
         if coding is r4:Coding[] {
             return coding[0].code ?: "";
         }
@@ -284,32 +283,6 @@ isolated function geLastName(international401:Patient patient) returns string {
     r4:HumanName[]? var1 = patient.name;
     if (var1 is r4:HumanName[]) {
         return var1[0].family ?: "";
-    }
-
-    return "";
-}
-
-isolated function getStartDate(international401:Coverage coverage) returns string {
-    r4:Period? var1 = coverage.period;
-    if (var1 is r4:Period) {
-        r4:dateTime? var2 = var1.'start;
-        if (var2 is r4:dateTime) {
-            return var2;
-        }
-        return "";
-    }
-
-    return "";
-}
-
-isolated function getEndDate(international401:Coverage coverage) returns string {
-    r4:Period? var1 = coverage.period;
-    if (var1 is r4:Period) {
-        r4:dateTime? var2 = var1.end;
-        if (var2 is r4:dateTime) {
-            return var2;
-        }
-        return "";
     }
 
     return "";
