@@ -205,7 +205,7 @@ isolated function mapInternationCoverageToCustomCoverage(international401:Patien
     patient_first_name: geFirstName(patient),
     patient_last_name: geLastName(patient),
     phone: getFirstContact(patient, "phone"),
-    relationship_code: "",
+    relationship_code: getRelationshipCode(coverage),
     secondary_coverage_flag: false
 };
 
@@ -245,11 +245,15 @@ isolated function getAddressLine(international401:Patient patient) returns strin
     return [];
 }
 
-isolated function getRelationshipCode(international401:Patient patient) returns string {
-    r4:Address[]? var1 = patient.address;
-    if (var1 is r4:Address[]) {
-        return var1[0].state ?: "";
-    }
+isolated function getRelationshipCode(international401:Coverage coverage) returns string {
+    r4:CodeableConcept? relationship = coverage.relationship;
+    if relationship is r4:CodeableConcept {
+        r4:Coding[]? coding = relationship.coding;
+        
+        if coding is r4:Coding[] {
+            return coding[0].code ?: "";
+        }
+    } 
 
     return "";
 }
@@ -341,3 +345,4 @@ isolated function getGroupValue(international401:Coverage coverage) returns stri
 
     return "";
 }
+
