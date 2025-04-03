@@ -249,11 +249,11 @@ isolated function getRelationshipCode(international401:Coverage coverage) return
     r4:CodeableConcept? relationship = coverage.relationship;
     if relationship is r4:CodeableConcept {
         r4:Coding[]? coding = relationship.coding;
-        
+
         if coding is r4:Coding[] {
             return coding[0].code ?: "";
         }
-    } 
+    }
 
     return "";
 }
