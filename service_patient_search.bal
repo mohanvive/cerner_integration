@@ -167,7 +167,7 @@ service /healthcare on new http:Listener(9090) {
         io:println(patient);
 
         map<string[]> coverageSearchParameters = {
-            "-encounter": ["97953483"]
+            "patient": [patientInput.memberId]
         };
 
         fhirClient:FHIRResponse coverageSearchResponse = check fhirConnectorObject->search(
