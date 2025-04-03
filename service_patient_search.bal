@@ -115,36 +115,6 @@ service /healthcare on new http:Listener(9090) {
             customPatientEntries.push(CustomPatient);
         }
 
-        // json|error entries = inputJson.entry;
-        // if entries is json {
-        //     if entries is json[] {
-        //         foreach var item in entries {
-        //             // var ss = {"fullUrl":"https://fhir-ehr-code.cerner.com/r4/ec2458f2-1e24-41c8-b71b-0e701af7583d/Patient/12803002","resource":{"resourceType":"Patient","id":"12803002","meta":{"versionId":"0","lastUpdated":"2022-08-04T18:33:42.000Z"},"text":{"status":"generated"},"identifier":[{"id":"CI-490995427-0","use":"usual","type":{"coding":[{"system":"https://fhir.cerner.com/ec2458f2-1e24-41c8-b71b-0e701af7583d/codeSet/4","code":"2","display":"Community Medical Record Number","userSelected":true},{"system":"http://terminology.hl7.org/CodeSystem/v2-0203","code":"MR","display":"Medical record number","userSelected":false}],"text":"Community Medical Record Number"},"system":"urn:oid:2.16.840.1.113883.3.787.0.0","value":"53156","_value":{"extension":[{"valueString":"53156","url":"http://hl7.org/fhir/StructureDefinition/rendered-value"}]},"period":{"start":"2022-08-04T18:33:42.000Z"}},{"id":"CI-490995431-1","use":"usual","type":{"coding":[{"system":"https://fhir.cerner.com/ec2458f2-1e24-41c8-b71b-0e701af7583d/codeSet/4","code":"10","display":"MRN","userSelected":true},{"system":"http://terminology.hl7.org/CodeSystem/v2-0203","code":"MR","display":"Medical record number","userSelected":false}],"text":"MRN"},"system":"urn:oid:2.16.840.1.113883.6.1000","value":"61145","_value":{"extension":[{"valueString":"00000061145","url":"http://hl7.org/fhir/StructureDefinition/rendered-value"}]},"period":{"start":"2022-08-04T18:33:42.000Z"}},{"id":"CI-490995429-2","use":"usual","type":{"coding":[{"system":"https://fhir.cerner.com/ec2458f2-1e24-41c8-b71b-0e701af7583d/codeSet/4","code":"2553236785","display":"MIllennium Person Identifier","userSelected":true}],"text":"MIllennium Person Identifier"},"_system":{"extension":[{"valueCode":"unknown","url":"http://hl7.org/fhir/StructureDefinition/data-absent-reason"}]},"value":"69404","_value":{"extension":[{"valueString":"69404","url":"http://hl7.org/fhir/StructureDefinition/rendered-value"}]},"period":{"start":"2022-08-04T18:33:42.000Z"}}],"active":true,"name":[{"id":"CI-12803002-0","use":"official","text":"DC-TEST, John","family":"DC-TEST","given":["John"]}],"gender":"male","birthDate":"2009-09-09"},"search":{"mode":"match"}};
-        //             io:println(item);
-        //             international401:Patient patient = check fhirParser:parse(check item.'resource).ensureType();
-        //             // uscore501:USCorePatientProfile patient = check fhirParser:parse(item, uscore501:USCorePatientProfile).ensureType();
-        //             io:println(patient);
-        //         }
-        //     }
-        // }
-
-        // json inputJson = <json> searchResponse.'resource;
-        // json|error entries = inputJson.entry;
-        // if entries is json {
-        //     if entries is json[] {
-        //         foreach var item in entries {
-        //             json ss = {"fullUrl":"https://fhir-ehr-code.cerner.com/r4/ec2458f2-1e24-41c8-b71b-0e701af7583d/Patient/12803002","resource":{"resourceType":"Patient","id":"12803002","meta":{"versionId":"0","lastUpdated":"2022-08-04T18:33:42.000Z"},"text":{"status":"generated"},"identifier":[{"id":"CI-490995427-0","use":"usual","type":{"coding":[{"system":"https://fhir.cerner.com/ec2458f2-1e24-41c8-b71b-0e701af7583d/codeSet/4","code":"2","display":"Community Medical Record Number","userSelected":true},{"system":"http://terminology.hl7.org/CodeSystem/v2-0203","code":"MR","display":"Medical record number","userSelected":false}],"text":"Community Medical Record Number"},"system":"urn:oid:2.16.840.1.113883.3.787.0.0","value":"53156","_value":{"extension":[{"valueString":"53156","url":"http://hl7.org/fhir/StructureDefinition/rendered-value"}]},"period":{"start":"2022-08-04T18:33:42.000Z"}},{"id":"CI-490995431-1","use":"usual","type":{"coding":[{"system":"https://fhir.cerner.com/ec2458f2-1e24-41c8-b71b-0e701af7583d/codeSet/4","code":"10","display":"MRN","userSelected":true},{"system":"http://terminology.hl7.org/CodeSystem/v2-0203","code":"MR","display":"Medical record number","userSelected":false}],"text":"MRN"},"system":"urn:oid:2.16.840.1.113883.6.1000","value":"61145","_value":{"extension":[{"valueString":"00000061145","url":"http://hl7.org/fhir/StructureDefinition/rendered-value"}]},"period":{"start":"2022-08-04T18:33:42.000Z"}},{"id":"CI-490995429-2","use":"usual","type":{"coding":[{"system":"https://fhir.cerner.com/ec2458f2-1e24-41c8-b71b-0e701af7583d/codeSet/4","code":"2553236785","display":"MIllennium Person Identifier","userSelected":true}],"text":"MIllennium Person Identifier"},"_system":{"extension":[{"valueCode":"unknown","url":"http://hl7.org/fhir/StructureDefinition/data-absent-reason"}]},"value":"69404","_value":{"extension":[{"valueString":"69404","url":"http://hl7.org/fhir/StructureDefinition/rendered-value"}]},"period":{"start":"2022-08-04T18:33:42.000Z"}}],"active":true,"name":[{"id":"CI-12803002-0","use":"official","text":"DC-TEST, John","family":"DC-TEST","given":["John"]}],"gender":"male","birthDate":"2009-09-09"},"search":{"mode":"match"}};
-
-        //             io:println(ss);
-        //             international401:Patient patient = check fhirParser:parse(ss).ensureType();
-        //             io:println(patient);
-        //         }
-        //     }
-        // }
-
-        // json outputJson = check jsondata:read(inputJson, `$.entry[*].resource.given`);
-        // io:print(outputJson);
-
         return customPatientEntries;
     }
 
@@ -196,7 +166,6 @@ service /healthcare on new http:Listener(9090) {
 
         io:println(patient);
 
-
         map<string[]> coverageSearchParameters = {
             "-encounter": ["97953483"]
         };
@@ -211,6 +180,7 @@ service /healthcare on new http:Listener(9090) {
         entries = fhirBundle.entry ?: [];
         international401:Coverage coverage = check entries[0]?.'resource.cloneWithType();
 
+        io:println(coverage);
         return mapInternationCoverageToCustomCoverage(patient, coverage);
 
     }
@@ -226,12 +196,12 @@ isolated function mapInternationPatientToCustomPatient(international401:Patient 
 isolated function mapInternationCoverageToCustomCoverage(international401:Patient patient,
         international401:Coverage coverage) returns CustomCoverage => {
     benefit_code: "",
-    coverage_end_date: "",
-    coverage_start_date: "",
+    coverage_end_date: getEndDate(coverage),
+    coverage_start_date: getStartDate(coverage),
     email: getFirstContact(patient, "email"),
     gender: patient.gender.toString(),
-    carrier_id: "",
-    account_id: "",
+    carrier_id: getCarrierId(coverage),
+    account_id: coverage.subscriberId ?: "",
     group_number: "",
     is_eligible: false,
     member_age: 0,
@@ -317,6 +287,41 @@ isolated function geLastName(international401:Patient patient) returns string {
     r4:HumanName[]? var1 = patient.name;
     if (var1 is r4:HumanName[]) {
         return var1[0].family ?: "";
+    }
+
+    return "";
+}
+
+isolated function getStartDate(international401:Coverage coverage) returns string {
+    r4:Period? var1 = coverage.period;
+    if (var1 is r4:Period) {
+        r4:dateTime? var2 = var1.'start;
+        if (var2 is r4:dateTime) {
+            return var2;
+        }
+        return "";
+    }
+
+    return "";
+}
+
+isolated function getEndDate(international401:Coverage coverage) returns string {
+    r4:Period? var1 = coverage.period;
+    if (var1 is r4:Period) {
+        r4:dateTime? var2 = var1.end;
+        if (var2 is r4:dateTime) {
+            return var2;
+        }
+        return "";
+    }
+
+    return "";
+}
+
+isolated function getCarrierId(international401:Coverage coverage) returns string {
+    r4:Identifier[]? var1 = coverage.identifier;
+    if (var1 is r4:Identifier[]) {
+        return var1[0].id ?: "";
     }
 
     return "";
