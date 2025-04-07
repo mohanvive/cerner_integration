@@ -173,6 +173,7 @@ service /healthcare on new http:Listener(9090) {
         international401:Coverage coverage = check entries[0]?.'resource.cloneWithType();
 
         io:println(coverage);
+        io:println("test data");
         return mapInternationCoverageToCustomCoverage(patient, coverage);
 
     }
